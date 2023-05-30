@@ -236,7 +236,7 @@ def playlist_model(url, model, max_gen=3, same_art=5):
          else:
              df.iloc[:, 3:19] = sc.transform(df.iloc[:, 3:19])
          x = i
-         if model == 'Model 1':
+         if model == 'Genre':
              df['sim']=cosine_similarity(df.drop(['track_uri', 'artist_uri', 'album_uri'], axis = 1),playvec.drop(['track_uri', 'artist_uri', 'album_uri'], axis = 1))
              df['sim2']=cosine_similarity(df.iloc[:,16:-1],playvec.iloc[:,16:])
              df['sim3']=cosine_similarity(df.iloc[:,19:-2],playvec.iloc[:,19:])
@@ -245,7 +245,7 @@ def playlist_model(url, model, max_gen=3, same_art=5):
              Fresult = Fresult.sort_values(['sim3', 'sim2', 'sim'],ascending=False,kind='stable')
              Fresult.drop_duplicates(subset=['track_uri'], inplace=True,keep='first')
              Fresult = Fresult.groupby('artist_uri').head(same_art).head(50)
-         elif model == 'Model 2':
+         elif model == 'Artist':
              df['sim'] = cosine_similarity(df.iloc[:, 3:16], playvec.iloc[:, 3:16])
              df['sim2'] = cosine_similarity(df.loc[:, df.columns.str.startswith('T') | df.columns.str.startswith('A')], playvec.loc[:, playvec.columns.str.startswith('T') | playvec.columns.str.startswith('A')])
              df['sim3'] = cosine_similarity(df.loc[:, df.columns.str.startswith('genre')], playvec.loc[:, playvec.columns.str.startswith('genre')])
@@ -261,11 +261,11 @@ def playlist_model(url, model, max_gen=3, same_art=5):
       log.append('Getting Result')
      except:
          log.append('Getting Result')
-     if model == 'Model 1':
+     if model == 'Genre':
          Fresult = Fresult.sort_values(['sim3', 'sim2', 'sim'],ascending=False,kind='stable')
          Fresult.drop_duplicates(subset=['track_uri'], inplace=True,keep='first')
          Fresult = Fresult.groupby('artist_uri').head(same_art).track_uri.head(50)
-     elif model == 'Model 2':
+     elif model == 'Artist':
          Fresult = Fresult.sort_values(['sim4'], ascending=False,kind='stable')
          Fresult.drop_duplicates(subset=['track_uri'], inplace=True,keep='first')
          Fresult = Fresult.groupby('artist_uri').head(same_art).track_uri.head(50)
@@ -448,7 +448,7 @@ def song_model(url, model, max_gen=3, same_art=5):
          else:
              df.iloc[:, 3:19] = sc.transform(df.iloc[:, 3:19])
          x = i
-         if model == 'Model 1':
+         if model == 'Genre':
              df['sim']=cosine_similarity(df.drop(['track_uri', 'artist_uri', 'album_uri'], axis = 1),playvec.drop(['track_uri', 'artist_uri', 'album_uri'], axis = 1))
              df['sim2']=cosine_similarity(df.iloc[:,16:-1],playvec.iloc[:,16:])
              df['sim3']=cosine_similarity(df.iloc[:,19:-2],playvec.iloc[:,19:])
@@ -457,7 +457,7 @@ def song_model(url, model, max_gen=3, same_art=5):
              Fresult = Fresult.sort_values(['sim3', 'sim2', 'sim'],ascending=False,kind='stable')
              Fresult.drop_duplicates(subset=['track_uri'], inplace=True,keep='first')
              Fresult = Fresult.groupby('artist_uri').head(same_art).head(50)
-         elif model == 'Model 2':
+         elif model == 'Artist':
              df['sim'] = cosine_similarity(df.iloc[:, 3:16], playvec.iloc[:, 3:16])
              df['sim2'] = cosine_similarity(df.loc[:, df.columns.str.startswith('T') | df.columns.str.startswith('A')], playvec.loc[:, playvec.columns.str.startswith('T') | playvec.columns.str.startswith('A')])
              df['sim3'] = cosine_similarity(df.loc[:, df.columns.str.startswith('genre')], playvec.loc[:, playvec.columns.str.startswith('genre')])
@@ -473,11 +473,11 @@ def song_model(url, model, max_gen=3, same_art=5):
       log.append('Getting Result')
      except:
          log.append('Getting Result')
-     if model == 'Model 1':
+     if model == 'Genre':
          Fresult = Fresult.sort_values(['sim3', 'sim2', 'sim'],ascending=False,kind='stable')
          Fresult.drop_duplicates(subset=['track_uri'], inplace=True,keep='first')
          Fresult = Fresult.groupby('artist_uri').head(same_art).track_uri.head(50)
-     elif model == 'Model 2':
+     elif model == 'Artist':
          Fresult = Fresult.sort_values(['sim4'], ascending=False,kind='stable')
          Fresult.drop_duplicates(subset=['track_uri'], inplace=True,keep='first')
          Fresult = Fresult.groupby('artist_uri').head(same_art).track_uri.head(50)
